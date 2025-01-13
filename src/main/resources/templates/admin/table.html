@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragments/head :: head"></head>
+<script src="/assets/js/table.js"></script>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <header th:replace="admin/fragments/header :: header"></header>
+
+    <aside th:replace="admin/fragments/sidebar :: sidebar"></aside>
+
+    <div class="content-wrapper">
+        <section class="content-header" id="nameRestaurant">
+        </section>
+
+        <section class="content">
+
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <a href="/admin/restaurant/table/add" class="btn btn-success">+Thêm mới bàn</a>
+                        <div class="box-tools">
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                                <input type="text" id="tableSearchInput" name="table_search" class="form-control pull-right"
+                                       placeholder="Search">
+
+                                <div class="input-group-btn">
+                                    <button id="tableSearchBtn" type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Tên bàn</th>
+                                <th>Tầng</th>
+                                <th>Sức chứa</th>
+                                <th>Giá (VNĐ)</th>
+                                <th>Tiện ích</th>
+                                <th>Ảnh</th>
+                                <th>Số lượng</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tableData"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+    <footer th:replace="admin/fragments/footer :: footer"></footer>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragments/head :: head"></head>
+<script src="/assets/js/flight.js"></script>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <header th:replace="admin/fragments/header :: header"></header>
+    <aside th:replace="admin/fragments/sidebar :: sidebar"></aside>
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                Quản lý vé máy bay
+            </h1>
+        </section>
+
+        <section class="content">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <a href="/admin/flight/add" class="btn btn-success">+Thêm mới chuyến bay</a>
+
+                        <div class="box-tools">
+                            <form id="form">
+                                <div class="input-group input-group-sm" style="width: 150px;">
+                                    <div style="display: flex; width: 400px">
+                                        <input type="text" name="departure" class="form-control pull-right"
+                                               placeholder="Điểm khởi hành">
+                                        <input type="text" name="arrival" class="form-control pull-right"
+                                               placeholder="Điểm đi">
+                                        <input type="date" name="date" class="form-control pull-right"
+                                               placeholder="Ngày khởi hành">
+                                    </div>
+                                    <div class="input-group-btn">
+                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Chuyến bay</th>
+                                    <th>Điểm khởi hành</th>
+                                    <th>Điểm đến</th>
+                                    <th>Ngày khởi hành</th>
+                                    <th style="width: 100px">Ngày đến</th>
+                                    <th>Thời gian khởi hành</th>
+                                    <th>Thời gian đến</th>
+                                    <th>Giá(VNĐ)</th>
+                                    <th>Ghế trống</th>
+                                    <th style="width: 125px;">Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody id="flightData">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <footer th:replace="admin/fragments/footer :: footer"></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,179 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #f8f9fa;
+}
+
+/* Flight Details */
+#flight-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#flight-details h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+#flight-details p {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+/* Booking Form */
+/* #booking-form {
+    display: none;
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+} */
+
+#booking-form h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+#booking-form label {
+    display: block;
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+#booking-form input,
+#booking-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+#booking-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: background-color 0.3s;
+}
+
+#booking-form button:hover {
+    background-color: #0056b3;
+}
+
+/* Popup Alert */
+#alert-container {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px;
+    background-color: #28a745;
+    color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    font-size: 1.2rem;
+}
+
+#alert-container span {
+    font-weight: bold;
+}
+
+h2, p{
+    color: #000;
+}
+
+button{
+    padding: 10px 15px;
+    margin: 0 5px;
+    border: none;
+
+    /*background: var(--btn-black);*/
+    /*color: rgb(255, 255, 255);*/
+    /*border-radius: 5px;*/
+    /*cursor: pointer;*/
+    background: #36b09c;
+    color: rgb(255, 255, 255);
+    border-radius: 15px!important;
+    cursor: pointer;
+}
+
+
+button:hover{
+    opacity: .7;
+}
+
+.container__about--text p{
+    color: #fff;
+}
+
+
+
+
+
+
+
+
+
+.modal{
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    overflow: auto;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: auto auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 650px;
+    border-radius: 10px;
+    position: relative;
+    top: 20px;
+    color: #000;
+}
+
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.seats{
+    font-size: 15px;
+    color: red;
+    margin: 10px 0;
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragments/head :: head"></head>
+<script src="/assets/js/imageOfTour.js"></script>
+<style>
+  td img{
+    max-width: 100%;
+    height: 100px;
+    object-fit: cover;
+  }
+</style>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+  <header th:replace="admin/fragments/header :: header"></header>
+  <aside th:replace="admin/fragments/sidebar :: sidebar"></aside>
+  <div class="content-wrapper">
+    <section class="content-header">
+      <h1>
+        Quản lý Tour Du Lịch
+      </h1>
+    </section>
+    <section class="content">
+
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <a href="/admin/tour/image/add" class="btn btn-success">+Thêm mới ảnh</a>
+            <div class="box-tools">
+              <form id="form">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                  <div>
+                    <input type="text" name="nameTour" placeholder="Nhập tên Tour" class="form-control pull-right">
+                  </div>
+                  <div class="input-group-btn">
+                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+              <thead>
+              <tr>
+                <th>Id</th>
+                <th>Ảnh 1</th>
+                <th>Ảnh 2</th>
+                <th>Ảnh 3</th>
+                <th>Ảnh 4</th>
+                <th>Ảnh 5</th>
+                <th>Hành động</th>
+              </tr>
+              </thead>
+              <tbody id="imageData"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <footer th:replace="admin/fragments/footer :: footer"></footer>
+</div>
+</body>
+</html>

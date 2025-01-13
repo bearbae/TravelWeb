@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragments/head :: head"></head>
+<script src="/assets/js/addArticle.js"></script>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+  <header th:replace="admin/fragments/header :: header"></header>
+
+  <aside th:replace="admin/fragments/sidebar :: sidebar"></aside>
+
+  <div class="content-wrapper">
+    <section class="content-header">
+      <h1>
+        Quản lý bài viết
+      </h1>
+    </section>
+
+    <section class="content">
+
+      <div class="col-md-8">
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">Thêm mới bài viết</h3>
+          </div>
+          <form  role="form" id="addArticle" >
+            <div class="box-body">
+              <div class="form-group">
+                <label for="title">Tiêu đề</label>
+                <input type="text" class="form-control" id="title" name="title" >
+              </div>
+              <div class="form-group">
+                <label for="content1">Nội dung1</label>
+                <textarea type="text" class="form-control" id="content1" name="content1" ></textarea>
+              </div>
+              <div class="form-group">
+                <label for="content2">Nội dung2</label>
+                <textarea type="text" class="form-control" id="content2" name="content2" ></textarea>
+              </div>
+              <div class="form-group">
+                <label for="nameAuthor">Tác giả</label>
+                <input type="text" class="form-control" id="nameAuthor" name="nameAuthor" >
+              </div>
+              <div class="form-group">
+                <label for="aboutBlog">Đánh giá</label>
+                <textarea type="text" class="form-control" id="aboutBlog" name="aboutBlog" ></textarea>
+              </div>
+              <div class="form-group">
+                <label for="timePost">Thời gian đăng</label>
+                <input type="date" class="form-control" id="timePost" name="timePost" >
+              </div>
+              <div class="form-group">
+                <label for="category">Thể loại</label>
+                <input type="text" class="form-control" id="category" name="category" >
+              </div>
+              <div class="form-group">
+                <label for="image1">Ảnh1</label>
+                <input type="file" class="form-control" id="image1" name="image1" required >
+              </div>
+              <div class="form-group">
+                <label for="image2">Ảnh2</label>
+                <input type="file" class="form-control" id="image2" name="image2"required >
+              </div>
+              <div class="form-group">
+                <label for="image3">Ảnh3</label>
+                <input type="file" class="form-control" id="image3" name="image3" required >
+              </div>
+              <div class="form-group">
+                <label for="image4">Ảnh4</label>
+                <input type="file" class="form-control" id="image4" name="image4" required >
+              </div>
+            </div>
+            <div class="box-footer">
+              <button id="uploadButton" type="submit"  class="btn btn-primary" >Thêm</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer th:replace="admin/fragments/footer :: footer"></footer>
+
+</div>
+</body>
+</html>

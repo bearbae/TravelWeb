@@ -1,0 +1,220 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f3f4f6;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    background: var(--bg-section);
+    position: relative;
+    padding: 50px 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-container {
+    background-color: #ffffff;
+    padding: 20px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 800px;
+    max-width: 90%;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    height: 200px;
+}
+
+.search-container h2 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.search-container p {
+    font-size: 14px;
+    color: #777;
+    margin-top: 8px;
+    margin-bottom: 20px;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-box input,.search-box select{
+    padding: 6px 16px;
+    border-radius: 25px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+/*.search-input {*/
+/*    flex: 1;*/
+/*    padding: 10px 15px;*/
+/*    border-radius: 25px;*/
+/*    border: 1px solid #ddd;*/
+/*    font-size: 14px;*/
+/*}*/
+
+.dropdown {
+    padding: 10px 15px;
+    border-radius: 25px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    cursor: pointer;
+    color: #555;
+}
+
+.search-button {
+    background-color: #40cbb4;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.search-button:hover {
+    background-color: #36b09c;
+}
+
+
+
+.body_card {
+    background: #e7e7e7;
+    padding: 20px;
+    border-radius: 10px;
+}
+.card-body{
+    width: 100%;
+}
+
+.grid-container {
+    display: grid;
+    /* Chia 3 cột đều nhau */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+}
+.card:hover {
+    transform: scale(1.05); /* Phóng to 5% */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Tạo bóng */
+}
+
+/* Responsive để giảm số cột trên màn hình nhỏ hơn */
+@media (max-width: 992px) {
+    .grid-container {
+        /* Chia thành 2 cột khi màn hình nhỏ hơn 992px */
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+}
+
+@media (max-width: 576px) {
+    .grid-container {
+        /* Chuyển thành 1 cột khi màn hình nhỏ hơn 576px */
+
+        grid-template-columns: 1fr;
+    }
+}
+
+.card img {
+    border-radius: 10px;
+    height: 180px;
+    object-fit: cover;
+}
+
+.badge {
+    background-color: #fdd835;
+    color: #ffffff;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.location {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.nameRestaurant {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.price {
+    font-size: 1.25rem;
+    color: #4b53bb;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.btn-custom {
+    background-color: #cfa456;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.btn-custom:hover {
+    background-color: #ab8540;
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px 0;
+}
+
+.pagination-controls button {
+    padding: 10px 15px;
+    margin: 0 5px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.pagination-controls button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.pagination-controls #pageInfo {
+    margin: 0 10px;
+    font-weight: bold;
+}

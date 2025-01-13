@@ -1,0 +1,83 @@
+body {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+
+.sidebar a {
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+.sidebar a:hover {
+    background-color: #e9ecef;
+}
+
+.sidebar a.active {
+    background-color: #4390a1;
+    color: white;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+}
+
+#update-password {
+    margin-top: 20px;
+}
+
+#update-info,
+#update-password,
+.table-responsive {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+}
+
+.btn {
+    background-color: #4390a1;
+}
+
+a {
+    color: rgb(10 112 202);
+}
+
+td a{
+    cursor: pointer;
+}
+td a:hover{
+    color: #00acd6 !important;
+}
+.approveBook{
+    background-color: #198754!important;
+}
+.admin{
+    background-color: #00a65a!important;
+    color: #fff;
+}
+.user{
+    background-color: #bb56af!important;
+    color: #fff;
+}
+.admin:hover{
+    background-color: #246B4BFF !important;
+}
+.user:hover{
+    background-color: #98368f !important;
+}
+#message_info,
+#message_password {
+    margin-bottom: 10px;
+}

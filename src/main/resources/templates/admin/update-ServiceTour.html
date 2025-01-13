@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www/thymeleaf.org">
+<head th:replace="admin/fragments/head :: head"></head>
+<script src="/assets/js/updateServiceTour.js"></script>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+    <header th:replace="admin/fragments/header :: header"></header>
+
+    <aside th:replace="admin/fragments/sidebar :: sidebar"></aside>
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                Quản lý thông tin dịch vụ Tour du lịch
+            </h1>
+        </section>
+
+        <section class="content">
+
+            <div class="col-md-8">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Cập nhật thông tin dịch vụ Tour du lịch</h3>
+                    </div>
+                    <form role="form" id="updateService">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="timeToGo">Khởi hành</label>
+                                <input type="time" class="form-control" id="timeToGo" name="timeToGo" required >
+                            </div>
+                            <div class="form-group">
+                                <label for="timeToBack">Quay về</label>
+                                <input type="time" class="form-control" id="timeToBack" name="timeToBack" required >
+                            </div>
+                            <div class="form-group">
+                                <label for="address1">Địa điểm 1</label>
+                                <input type="text" class="form-control" id="address1" name="address1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="time1">Thời gian 1</label>
+                                <input type="time" class="form-control" id="time1" name="time1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="address2">Địa điểm 2</label>
+                                <input type="text" class="form-control" id="address2" name="address2" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="time2">Thời gian 2</label>
+                                <input type="time" class="form-control" id="time2" name="time2" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="address3">Địa điểm 3</label>
+                                <input type="text" class="form-control" id="address3" name="address3" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="time3">Thời gian 3</label>
+                                <input type="time" class="form-control" id="time3" name="time3" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="vehicle">Xe di chuyển</label>
+                                <input type="text" class="form-control" id="vehicle" name="vehicle" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pricePerAdult">Người lớn(VNĐ)</label>
+                                <input type="text" class="form-control" id="pricePerAdult" name="pricePerAdult" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="pricePerChild">Trẻ em(VNĐ)</label>
+                                <input type="text" class="form-control" id="pricePerChild" name="pricePerChild" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="code">Mã dịch vụ</label>
+                                <input type="text" class="form-control" id="code" name="code" required>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary" >Cập nhật</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer th:replace="admin/fragments/footer :: footer"></footer>
+
+</div>
+<script>
+    document.querySelectorAll('#pricePerChild, #pricePerAdult').forEach(element => {
+        element.addEventListener('input', function(e) {
+            let value = e.target.value;
+
+            // Xóa các ký tự không phải số và dấu chấm
+            value = value.replace(/[^0-9]/g, '');
+
+            let formattedValue = new Intl.NumberFormat('vi-VN').format(value);
+
+            e.target.value = formattedValue;
+    });
+    });
+    // Khi submit form
+    document.getElementById('updateService').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        let pricePerAdult = document.getElementById('pricePerAdult').value;
+        let pricePerChild = document.getElementById('pricePerChild').value;
+
+
+        let pricePerAdultWithoutDots = pricePerAdult.replace(/\./g, '');
+        let pricePerChildWithoutDots = pricePerChild.replace(/\./g, '');
+
+
+        document.getElementById('pricePerAdult').value = pricePerAdultWithoutDots;
+        document.getElementById('pricePerChild').value = pricePerChildWithoutDots;
+
+
+    });
+</script>
+</body>
+</html>

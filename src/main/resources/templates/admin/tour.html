@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragments/head :: head"></head>
+<script src="/assets/js/tour.js"></script>
+<style>
+  table {
+    table-layout: fixed;
+    width: 100%;
+  }
+  td:not(:nth-last-child(-n+3)) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 150px;
+  }
+</style>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+  <header th:replace="admin/fragments/header :: header"></header>
+  <aside th:replace="admin/fragments/sidebar :: sidebar"></aside>
+  <div class="content-wrapper">
+    <section class="content-header">
+      <h1>
+        Quản lý Tour Du Lịch
+      </h1>
+    </section>
+    <section class="content">
+
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <a href="/admin/tour/add" class="btn btn-success">+Thêm mới Tour</a>
+            <div class="box-tools">
+              <form id="form">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                  <div>
+                    <input type="text" name="nameTour" placeholder="Nhập tên Tour" class="form-control pull-right">
+                  </div>
+                  <div class="input-group-btn">
+                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+              <thead>
+              <tr>
+                <th>Id</th>
+                <th>Loại Tour</th>
+                <th>Địa điểm</th>
+                <th>Tiêu đề</th>
+                <th>Số sao</th>
+                <th>Đánh giá</th>
+                <th>Đã đặt</th>
+                <th>Giá</th>
+                <th>Đặc điểm</th>
+                <th style="width: 165px">Nội dung</th>
+                <th style="width: 88px"></th>
+                <th style="width: 107px"></th>
+                <th style="width: 125px">Hành động</th>
+              </tr>
+              </thead>
+              <tbody id="TourData"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </div>
+  <footer th:replace="admin/fragments/footer :: footer"></footer>
+</div>
+</body>
+</html>

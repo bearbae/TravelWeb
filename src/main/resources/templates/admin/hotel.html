@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragments/head :: head"></head>
+<script src="/assets/js/hotel.js"></script>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+  <header th:replace="admin/fragments/header :: header"></header>
+  <aside th:replace="admin/fragments/sidebar :: sidebar"></aside>
+
+  <div class="content-wrapper">
+    <section class="content-header">
+      <h1>
+        Quản lý khách sạn
+      </h1>
+    </section>
+
+    <section class="content">
+
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <a href="/admin/hotel/add" class="btn btn-success">+Thêm mới khách sạn</a>
+
+            <div class="box-tools">
+              <form id="form">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                  <div style="display:flex; width: 450px">
+                    <input type="text" name="nameHotel" placeholder="Nhập tên khách sạn" class="form-control pull-right">
+                    <input type="text" name="location" class="form-control pull-right"
+                           placeholder="Địa điểm">
+                    <select name="priceHotel" class="form-control">
+                      <option value="allPrice">Tất cả giá </option>
+                      <option value="underPrice">Dưới 1 triệu</option>
+                      <option value="middlePrice">Từ 1 đến 3 triệu</option>
+                      <option value="abovePrice">Trên 3 triệu</option>
+                    </select>
+                  </div>
+                  <div class="input-group-btn">
+                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Id</th>
+                  <th>Tên khách sạn</th>
+                  <th>Địa điểm</th>
+                  <th>Giá(VNĐ)</th>
+                  <th>Phòng trống</th>
+                  <th>Ảnh</th>
+                  <th>Mô tả</th>
+                  <th></th>
+                  <th style="width: 125px;">Hành động</th>
+                </tr>
+              </thead>
+              <tbody id="hotelData"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </div>
+
+  <footer th:replace="admin/fragments/footer :: footer"></footer>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head >
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/images/logo_title.ico">
+    <title>Travel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+          integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/grid.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/base.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/style.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/responsive.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/login.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/signup.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/bookticketflight.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+<head th:replace="~{user/fragments/header :: header}"></head>
+    <main>
+        <div id="flight-details">
+            <!-- Thông tin chuyến bay sẽ được hiển thị ở đây -->
+        </div>
+
+        <div class="modal" id="booking-form" style="display:none;">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2>Thông Tin Đặt Vé Khứ Hồi</h2>
+                <form id="bookingForm">
+                    <label for="fullName">Họ tên:</label>
+                    <input type="text" id="fullName" name="fullName" required><br><br>
+
+                    <label for="phoneNumber">Số điện thoại:</label>
+                    <input type="tel" id="phoneNumber" name="phoneNumber" required><br><br>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required><br><br>
+
+                    <label for="specialRequest">Yêu cầu đặc biệt:</label>
+                    <textarea id="specialRequest" name="specialRequest"></textarea><br><br>
+
+                    <label for="ticketCount">Số vé:</label>
+                    <input type="number" id="ticketCount" name="ticketCount" min="1" required><br><br>
+                    <p id="seats-remaining" style="color: red;"></p>
+
+                    <button type="submit">Đặt Vé Khứ Hồi</button>
+                </form>
+            </div>
+        </div>
+
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const urlParams = new URLSearchParams(window.location.search);
+                const departureFlightId = urlParams.get('departureFlightId');
+                const returnFlightId = urlParams.get('returnFlightId');
+
+                let minSeatsAvailable = 0; // To store the minimum seats available between the two flights
+
+                // Gửi yêu cầu lấy thông tin chuyến bay đi và về
+                async function fetchFlightDetails(flightId) {
+                    try {
+                        const response = await fetch(`http://localhost:8080/api/admin/flight/${flightId}`);
+                        if (!response.ok) {
+                            throw new Error("Không thể lấy thông tin chuyến bay!");
+                        }
+                        return await response.json();
+                    } catch (error) {
+                        console.error(error);
+                    }
+                }
+
+                // Hiển thị thông tin chuyến đi và về
+                async function displayRoundTripFlights() {
+                    try {
+                        const departureFlight = await fetchFlightDetails(departureFlightId);
+                        const returnFlight = await fetchFlightDetails(returnFlightId);
+
+                        minSeatsAvailable = Math.min(departureFlight.availableSeats, returnFlight.availableSeats);
+
+                        const flightDetailsElement = document.getElementById('flight-details');
+                        flightDetailsElement.innerHTML = `
+                <div>
+                    <h2>Thông Tin Chiều Đi</h2>
+                    <p>Chuyến bay: ${departureFlight.flightNumber}</p>
+                    <p>Điểm đi: ${departureFlight.departureCity}</p>
+                    <p>Điểm đến: ${departureFlight.arrivalCity}</p>
+                    <p>Ngày đi: ${departureFlight.departureDate}</p>
+                    <p>Giờ đi: ${departureFlight.departureTime}</p>
+                    <p>Giá vé: ${departureFlight.price.toLocaleString('vi-VN')} VND</p>
+                    <p>Số ghế còn lại: ${departureFlight.availableSeats}</p>
+                </div>
+                <div>
+                    <h2>Thông Tin Chiều Về</h2>
+                    <p>Chuyến bay: ${returnFlight.flightNumber}</p>
+                    <p>Điểm đi: ${returnFlight.departureCity}</p>
+                    <p>Điểm đến: ${returnFlight.arrivalCity}</p>
+                    <p>Ngày về: ${returnFlight.departureDate}</p>
+                    <p>Giờ về: ${returnFlight.departureTime}</p>
+                    <p>Giá vé: ${returnFlight.price.toLocaleString('vi-VN')} VND</p>
+                    <p>Số ghế còn lại: ${returnFlight.availableSeats}</p>
+                </div>
+                <div>
+                    <h3 style="margin: 20px 0; font-size: 20px; color: #000;">Tổng giá: ${(departureFlight.price + returnFlight.price).toLocaleString('vi-VN')} VND</h3>
+                </div>
+                <button id="book-now">Đặt Vé Khứ Hồi</button>
+            `;
+
+                        const bookNowButton = document.getElementById('book-now');
+                        bookNowButton.addEventListener('click', function () {
+                            document.getElementById('booking-form').style.display = 'block';
+                            document.getElementById('seats-remaining').textContent = `Số vé khả dụng tối đa: ${minSeatsAvailable}`;
+                            const ticketInput = document.getElementById('ticketCount');
+                            ticketInput.max = minSeatsAvailable;
+                        });
+                    } catch (error) {
+                        console.error("Lỗi khi hiển thị thông tin chuyến bay:", error);
+                    }
+                }
+                displayRoundTripFlights();
+
+                // Xử lý sự kiện khi người dùng gửi form đặt vé
+                const bookingForm = document.querySelector('#bookingForm');
+                bookingForm.addEventListener('submit', async function (event) {
+                    event.preventDefault();
+
+                    const form = event.target;
+                    const formData = new FormData(form);
+
+                    const fullName = formData.get('fullName')?.trim();
+                    const phoneNumber = formData.get('phoneNumber')?.trim();
+                    const email = formData.get('email')?.trim();
+                    const specialRequest = formData.get('specialRequest')?.trim();
+                    const ticketCount = parseInt(formData.get('ticketCount'), 10);
+
+                    const user = JSON.parse(localStorage.getItem('user'));
+                    if (!user || !user.id) {
+                        alert('Bạn cần đăng nhập để đặt vé.');
+                        return;
+                    }
+
+                    if (ticketCount > minSeatsAvailable) {
+                        alert('Số vé yêu cầu vượt quá số ghế khả dụng.');
+                        return;
+                    }
+
+                    const bookingData = {
+                        departureFlightId: parseInt(departureFlightId, 10),
+                        returnFlightId: parseInt(returnFlightId, 10),
+                        fullName,
+                        phoneNumber,
+                        email,
+                        specialRequest,
+                        userId: user.id,
+                        seatCount: ticketCount
+                    };
+
+                    try {
+                        const response = await fetch("http://localhost:8080/api/user/bookings-flight/flight/roundtrip", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify(bookingData)
+                        });
+
+                        const data = await response.text();
+
+                        if (response.ok) {
+                            alert("Đặt vé khứ hồi thành công!");
+                            window.location.href = "/user/home";
+                        } else {
+                            alert(`Đặt vé không thành công: ${data}`);
+                        }
+                    } catch (error) {
+                        console.error("Error:", error);
+                        alert("Có lỗi xảy ra khi đặt vé. Vui lòng thử lại.");
+                    }
+                });
+            });
+        </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const modal = document.getElementById("booking-form");
+                const bookNowButton = document.querySelector(".book-now");
+                const closeBtn = document.querySelector(".close-btn");
+
+                // Đóng modal khi nhấn nút "X" trong modal
+                closeBtn.addEventListener("click", function () {
+                    modal.style.display = "none";
+                });
+
+                // Đóng modal khi nhấn bên ngoài modal
+                window.addEventListener("click", function (event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                });
+            });
+        </script>
+
+    </main>
+
+<footer th:replace="~{user/fragments/footer :: footer}"></footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -31,3 +31,10 @@ build/
 
 ### VS Code ###
 .vscode/
+src/main/resources/static/uploadsAddress/
+src/main/resources/static/uploadsArticle/
+src/main/resources/static/uploadsHotel/
+src/main/resources/static/uploadsRoom/
+src/main/resources/static/uploadsTour/
+src/main/resources/static/uploadsRestaurant/
+src/main/resources/static/uploadsTable/

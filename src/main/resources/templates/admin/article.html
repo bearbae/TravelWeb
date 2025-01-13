@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragments/head :: head"></head>
+<script src="/assets/js/article.js"></script>
+<style>
+  table {
+    table-layout: fixed;
+    width: 100%;
+  }
+td:not(:last-child) {
+     overflow: hidden;
+     text-overflow: ellipsis;
+     white-space: nowrap;
+     max-width: 150px;
+   }
+</style>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+  <header th:replace="admin/fragments/header :: header"></header>
+  <aside th:replace="admin/fragments/sidebar :: sidebar"></aside>
+
+  <div class="content-wrapper">
+    <section class="content-header">
+      <h1>
+        Quản lý bài viết
+      </h1>
+    </section>
+
+    <section class="content">
+
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-header">
+            <a href="/admin/article/add" class="btn btn-success">+Thêm mới bài viết</a>
+
+            <div class="box-tools">
+              <form id="form">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                  <input type="text" name="key" class="form-control pull-right"
+                         placeholder="Tiêu đề">
+                  <div class="input-group-btn">
+                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="box-body table-responsive no-padding">
+            <table class="table table-hover">
+              <thead>
+              <tr>
+                <th>Id</th>
+                <th>Tiêu đề</th>
+                <th>Nội dung1</th>
+                <th>Nội dung2</th>
+                <th>Tác giả</th>
+                <th>Đánh giá</th>
+                <th>Thời gian</th>
+                <th>Thể loại</th>
+                <th>Ảnh1</th>
+                <th>Ảnh2</th>
+                <th>Ảnh3</th>
+                <th>Ảnh4</th>
+                <th>Hành động</th>
+              </tr>
+              </thead>
+              <tbody id="articleData"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </div>
+
+  <footer th:replace="admin/fragments/footer :: footer"></footer>
+
+</div>
+
+</body>
+</html>

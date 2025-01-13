@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="user/fragments/head :: head"></head>
+<link rel="stylesheet" th:href="@{/assets/css/userCSS/hotel.css}">
+<script src="/assets/js/user/hotelUser.js"></script>
+<body>
+<head th:replace="~{user/fragments/header :: header}"></head>
+<div class="container" style="max-width: 100%;">
+    <div class="search-container">
+        <h2>Bạn lựa chọn khách sạn nào?</h2>
+        <p>Hàng nghìn khách sạn với mức giá tốt nhất đang chờ bạn</p>
+        <form id="form">
+            <div class="search-box">
+                <input type="text" name="nameHotel" placeholder="Nhập tên khách sạn" class="search-input">
+                <input type="text" name="location" class="form-control pull-right" placeholder="Địa điểm">
+                <select name="priceHotel" class="form-control">
+                    <option value="allPrice">Tất cả giá </option>
+                    <option value="underPrice">Dưới 1 triệu</option>
+                    <option value="middlePrice">Từ 1 đến 3 triệu</option>
+                    <option value="abovePrice">Trên 3 triệu</option>
+                </select>
+                <button class="search-button" type="submit">Tìm kiếm</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+<div class="container my-5 body_card" style="display: flex; justify-content: space-around">
+    <h4 style="width: 100%; font-weight: 600">Khám phá và trải nghiệm<br> tất cả dịch vụ tuyệt vời nhất<br> từ các khách sạn trên mọi miền<br> đất nước cùng BearTraveling.</h4>
+    <p style="width: 80%;">Không gian nghỉ dưỡng sang trọng, tiện nghi và hiện đại cùng dịch vụ chuyên nghiệp, BearTraveling tự hào mang đến những trải nghiệm hoàn hảo cho kỳ nghỉ của bạn, giúp bạn tận hưởng từng khoảnh khắc một cách đáng nhớ và trọn vẹn nhất!</p>
+</div>
+<div class="container my-5 body_card">
+    <div class="grid-container" id="hotelData">
+    </div>
+</div>
+<div class="pagination-controls">
+    <button id="prevPage" disabled>Trước</button>
+    <span id="pageInfo">Trang 1 / 1</span>
+    <button id="nextPage" disabled>Tiếp</button>
+</div>
+
+<footer th:replace="~{user/fragments/footer :: footer}"></footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www/thymeleaf.org">
+<head th:replace="admin/fragments/head :: head"></head>
+<script src="/assets/js/updateRoom.js"></script>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+    <header th:replace="admin/fragments/header :: header"></header>
+
+    <aside th:replace="admin/fragments/sidebar :: sidebar"></aside>
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                Quản lý thông tin phòng
+            </h1>
+        </section>
+
+        <section class="content">
+
+            <div class="col-md-8">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Cập nhật thông tin phòng</h3>
+                    </div>
+                    <form role="form" id="updateRoom">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="roomName">Tên phòng</label>
+                                <input type="text" class="form-control" id="roomName" name="roomName"  >
+                            </div>
+                            <div class="form-group">
+                                <label for="roomType">Loại phòng</label>
+                                <input type="text" class="form-control" id="roomType"  name="roomType" >
+                            </div>
+                            <div class="form-group">
+                                <label for="view">Cảnh quan</label>
+                                <input type="text" class="form-control" id="view" name="view" >
+                            </div>
+                            <div class="form-group">
+                                <label for="area">Diện tích(m2)</label>
+                                <input type="text" class="form-control" id="area" name="area" >
+                            </div>
+                            <div class="form-group">
+                                <label for="pricePerNight">Giá một đêm(VNĐ)</label>
+                                <input type="text" class="form-control" id="pricePerNight" name="pricePerNight" >
+                            </div>
+                            <div class="form-group">
+                                <label for="amenities">Tiện ích</label>
+                                <input type="text" class="form-control" id="amenities" name="amenities" >
+                            </div>
+                            <div class="form-group">
+                                <label for="imageRoom">Ảnh</label>
+                                <span id="currentImage"></span>
+                                <input type="file" class="form-control" id="imageRoom" name="imageRoom" >
+                            </div>
+                            <div class="form-group">
+                                <label for="quantity">Số lượng</label>
+                                <input type="text" class="form-control" id="quantity" name="quantity" required >
+                            </div>
+                        </div>
+                        <div id="message" class="" style="margin-left: 10px;"></div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary" >Cập nhật</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer th:replace="admin/fragments/footer :: footer"></footer>
+
+</div>
+<script>
+    document.getElementById('pricePerNight').addEventListener('input', function(e) {
+        let value = e.target.value;
+
+        // Xóa các ký tự không phải số và dấu chấm
+        value = value.replace(/[^0-9]/g, '');
+
+        let formattedValue = new Intl.NumberFormat('vi-VN').format(value);
+
+        e.target.value = formattedValue;
+    });
+
+    // Khi submit form
+    document.getElementById('updateRoom').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        let priceInput = document.getElementById('pricePerNight').value;
+
+        let priceWithoutDots = priceInput.replace(/\./g, '');
+
+        document.getElementById('pricePerNight').value = priceWithoutDots;
+
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,304 @@
+<header class="header" style="background-image: url('/assets/images/anhHeader.png');" th:fragment="header">
+  <div class="header__topbar">
+    <div class="grid wide">
+      <div class="header__topbar__container">
+        <div class="row">
+          <div class="l-6 m-8 c-8">
+            <div class="header__topbar__container--contacts">
+              <span>Hotline: 0123456789</span>
+              <a href="#"><i class="fab fa-pinterest"></i></a>
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-dribbble"></i></a>
+              <a href="#"><i class="fab fa-behance"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+          </div>
+          <div class="l-6 c-4">
+            <ul class="header__topbar__container--register" id="before-login">
+              <a href="#" id="login">
+                <li>Đăng nhập</li>
+              </a>
+              <a href="#">
+                <li>|</li>
+              </a>
+              <a href="#" id="signup">
+                <li>Đăng ký</li>
+              </a>
+            </ul>
+            <ul class="header__topbar__container--register" id="after-login" style="display: none;">
+              <a href="/user/userInfo" style="text-decoration: none"><li>Xin chào, <span id="user-name"></span></a> | </li>
+              <a href="#" id="logout"><li> Đăng xuất</li></a>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <nav class="header__nav">
+    <div class="header__nav__container">
+      <div class="grid wide">
+        <div class="row">
+          <div class="l-2 m-6 c-8">
+            <a href="#" style="text-decoration: none">
+              <div class="header__nav__container--logo">
+                <a href="/user/home" style="text-decoration: none">Travelix</a>
+              </div>
+            </a>
+          </div>
+          <div class="l-8 hide-on-tablet_mobile">
+            <ul class="header__nav__container--list">
+              <li class="active"><a href="/user/home">Trang chủ</a></li>
+              <li>
+                <a href="/user/flight">Tìm vé máy bay</a>
+              </li>
+              <li>
+                <a href="/user/hotel">Tìm khách sạn</a>
+              </li>
+              <li>
+                <a href="/user/restaurant">Tìm nhà hàng</a>
+              </li>
+              <li><a href="/user/article">Blog</a></li>
+            </ul>
+          </div>
+          <div class="l-2 m-6 c-4">
+<!--            <i class="fas fa-bars list-tablet-mobile" id="menu_open"></i>-->
+            <div class="header__nav__container--search">
+              <i class="fas fa-search" id="search"></i>
+              <br> <input type="text" placeholder="Search...">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!-- Popup Login -->
+  <div id="popup-login" class="dangnhap">
+    <div class="login-container">
+      <div>
+        <h1>Đăng nhập</h1>
+      </div>
+        <form id="loginForm">
+          <label for="email1">Email <span>*</span></label>
+          <input type="text" id="email1" name="email" placeholder="Nhập email" required>
+          <label for="password">Mật khẩu <span>*</span></label>
+          <div class="password-field">
+            <input type="password" id="password1" name="password" placeholder="Nhập mật khẩu" required>
+            <button type="button" class="toggle-password">&#128065;</button>
+          </div>
+          <div id="message_login" class="" style="margin-bottom: 10px"></div>
+          <p class="register-link">Bạn chưa là thành viên? <a href="#" id="signupNow">Đăng ký ngay</a></p>
+          <button type="submit" class="btn login-btn">ĐĂNG NHẬP</button>
+<!--          <p class="divider">Hoặc</p>-->
+<!--          <button type="button" class="btn social-btn facebook-btn">Đăng nhập với Facebook</button>-->
+<!--          <button type="button" class="btn social-btn google-btn">Đăng nhập với Google</button>-->
+        </form>
+      </div>
+  </div>
+
+  <!-- Popup Signup -->
+  <div id="popup-signup" class="dangky">
+    <div class="register-container">
+      <div>
+        <h1>Đăng ký</h1>
+      </div>
+      <form id="registerForm">
+        <label for="name">Họ Tên <span>*</span></label>
+        <input type="text" id="name" placeholder="Nhập tên" required>
+        <label for="email">Email <span>*</span></label>
+        <input type="text" id="email" placeholder="Nhập email" required>
+        <label for="phoneNumber">Số điện thoại <span>*</span></label>
+        <input type="text" id="phoneNumber" placeholder="Nhập số điện thoại" required>
+        <label for="address">Địa chỉ <span>*</span></label>
+        <input type="text" id="address" placeholder="Nhập địa chỉ" required>
+        <label for="password">Mật khẩu <span>*</span></label>
+        <div class="password-field">
+          <input type="password" id="password" placeholder="Nhập mật khẩu" required>
+          <button type="button" class="toggle-password">&#128065;</button>
+        </div>
+        <div id="message_signup" class="" style="margin-bottom: 10px"></div>
+        <p class="register-link">Bạn đã có tài khoản? <a href="#" id="loginNow">Đăng nhập ngay</a></p>
+        <button type="submit" id="btn_register" class="btn register-btn">ĐĂNG KÝ</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const loginPopup = document.getElementById('popup-login');
+    const login = document.getElementById('login');
+    const signupPopup = document.getElementById('popup-signup');
+    const signup = document.getElementById('signup');
+    const signupNow = document.getElementById('signupNow');
+    const loginNow = document.getElementById('loginNow');
+
+
+    signup.addEventListener("click", function() {
+      signupPopup.style.display = "block";
+    });
+    login.addEventListener("click", function() {
+      loginPopup.style.display = "block";
+    });
+
+    signupNow.addEventListener("click", function() {
+      signupPopup.style.display = "block";
+      loginPopup.style.display = "none";
+    });
+    loginNow.addEventListener("click", function() {
+      loginPopup.style.display = "block";
+      signupPopup.style.display = "none";
+    });
+    // Đóng signupPopup khi nhấn bên ngoài signupPopup
+    window.addEventListener("click", function(event) {
+      if (event.target == signupPopup) {
+        signupPopup.style.display = "none";
+      }
+    });
+    window.addEventListener("click", function(event) {
+      if (event.target == loginPopup) {
+        loginPopup.style.display = "none";
+      }
+    });
+// đang nhập
+    document.addEventListener("DOMContentLoaded", function () {
+
+
+      const loginForm = document.getElementById("loginForm");
+      const beforeLogin = document.getElementById("before-login");
+      const afterLogin = document.getElementById("after-login");
+      const userName = document.getElementById("user-name");
+
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user) {
+        beforeLogin.style.display = "none";
+        afterLogin.style.display = "block";
+        userName.textContent = user.name || "Người dùng";
+      } else {
+        beforeLogin.style.display = "block";
+        afterLogin.style.display = "none";
+      }
+
+      // dang nhap
+      loginForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const  form = event.target;
+        const formData = new FormData(form);
+        const messageLogin = document.getElementById("message_login");
+        messageLogin.textContent = "";
+        messageLogin.classList.remove("text-danger", "text-success");
+
+        fetch("http://localhost:8080/api/user/login", {
+          method: "POST",
+          body: formData
+        })
+                .then(response => {
+                  if (!response.ok) {
+                    throw new Error("Đăng nhập thất bại");
+                  }
+                  return response.json();
+                })
+                .then(data => {
+                  if (data) {
+                    messageLogin.textContent = "Đăng nhập thành công";
+                    messageLogin.classList.add("text-success");
+                    beforeLogin.style.display = "none";
+                    afterLogin.style.display = "block";
+                    loginPopup.style.display = "none";
+                    userName.textContent = data.name || "Người dùng";
+                    localStorage.setItem("user", JSON.stringify(data));
+                  } else {
+                    alert(data);
+                  }
+                })
+                .catch(error => {
+                  console.error("Lỗi:", error);
+                  messageLogin.textContent = "Sai tài khoản hoặc mật khẩu";
+                  messageLogin.classList.add("text-danger");
+                });
+      });
+      // đăng ký
+
+      var registerForm = document.getElementById("registerForm");
+
+      registerForm.addEventListener("submit", function (even){
+        even.preventDefault();
+        const messageSignup = document.getElementById("message_signup");
+        messageSignup.textContent = "";
+        messageSignup.classList.remove("text-danger", "text-success");
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const phoneNumber = document.getElementById("phoneNumber").value;
+        const address = document.getElementById("address").value;
+        const password = document.getElementById("password").value;
+
+        if (!/^\d{10}$/.test(phoneNumber)) {
+          messageSignup.textContent = "Số điện thoại chỉ được chứa 10 ký tự số";
+          messageSignup.classList.add("text-danger");
+          return;
+        }
+        const formData = {
+          name,
+          email,
+          phoneNumber,
+          address,
+          password
+        }
+
+        fetch(`http://localhost:8080/api/user/register`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(formData)
+        }).then(response =>{
+          if(!response.ok) {
+            throw new Error("Không có phản hồi")
+          }
+          return response.text();
+        }).then(data => {
+          if(data === "Tạo Tài Khoản Thành Công!"){
+            console.log(data)
+            messageSignup.textContent = "Tạo tài khoản thành công";
+            messageSignup.classList.add("text-success");
+            loginPopup.style.display = "block";
+            signupPopup.style.display = "none";
+          }
+          else {
+            messageSignup.textContent = "Tên tài khoản hoặc số điện thoại đã tồn tại";
+            messageSignup.classList.add("text-danger");
+          }
+        }).catch(error => {
+          console.log("Error: ", error);
+          messageSignup.textContent = "Lỗi đăng ký";
+          messageSignup.classList.add("text-danger");
+        })
+      })
+
+      // dang xuát
+      const logout = document.getElementById("logout");
+
+      logout.addEventListener("click", function () {
+        localStorage.removeItem("user");
+        beforeLogin.style.display = "block";
+        afterLogin.style.display = "none";
+        alert("Bạn đã đăng xuất!");
+        window.location.reload();
+
+      });
+
+      const togglePasswordButtons = document.querySelectorAll(".toggle-password");
+
+      togglePasswordButtons.forEach(button => {
+        button.addEventListener("click", function () {
+          const passwordField = this.previousElementSibling;
+          const currentType = passwordField.getAttribute("type");
+
+          if (currentType === "password") {
+            passwordField.setAttribute("type", "text");
+          } else {
+            passwordField.setAttribute("type", "password");
+          }
+        });
+      });
+    })
+  </script>
+</header>

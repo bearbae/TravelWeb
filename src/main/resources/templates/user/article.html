@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head >
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="assets/images/logo_title.ico">
+  <title>Travel</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" th:href="@{/assets/css/userCSS/grid.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/userCSS/base.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/userCSS/style.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/userCSS/responsive.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/userCSS/login.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/userCSS/signup.css}">
+  <link rel="stylesheet" th:href="@{/assets/css/userCSS/article.css}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<head th:replace="~{user/fragments/header :: header}"></head>
+<div class="container my-5">
+  <div class="row">
+    <div class="col-md-8" id="articleData">
+    </div>
+    <aside class="col-md-4">
+      <div class="mb-4 p-3 bg-light border rounded">
+        <h5 class="mb-3">Tìm kiếm ở đây</h5>
+        <form class="d-flex" id="form">
+          <input type="text" name="titleArticle" class="form-control me-2" placeholder="Tìm từ khóa của bạn ở đây...">
+          <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+      </div>
+      <div class="mb-4 p-3 bg-light border rounded text-center">
+        <img src="/assets/images/goku.png" alt="Author" class="rounded-circle mb-3" width="100">
+        <h5>Quốc Tiến</h5>
+        <p>Xin chào, tại đây bạn có thể xem thông tin bạn muốn.</p>
+        <div>
+          <a href="#" class="btn btn-outline-primary btn-sm me-1">Facebook</a>
+          <a href="#" class="btn btn-outline-danger btn-sm me-1">Google</a>
+          <a href="#" class="btn btn-outline-info btn-sm">Twitter</a>
+        </div>
+      </div>
+      <div class="p-3 bg-light border rounded">
+        <h5 class="mb-3">Danh mục</h5>
+        <ul class="list-unstyled">
+          <li>Du Lịch</li>
+          <li>Văn Hóa</li>
+          <li>Ẩm Thực</li>
+        </ul>
+      </div>
+    </aside>
+    <div class="pagination-controls_Article">
+      <button id="prevPage" disabled>Trước</button>
+      <span id="pageInfo">Trang 1 / 1</span>
+      <button id="nextPage" disabled>Tiếp</button>
+    </div>
+  </div>
+
+    <div class="related-posts">
+      <h2 class="text-center mb-4">Blogs và bài viết của chúng tôi</h2>
+      <p class="text-center text-muted mb-4">Một số bài đăng liên quan</p>
+<!--      <div class="marquee">-->
+          <div class="row" id="marquee_content" >
+          </div>
+        <button id="btn-prev" class="prev">&lt;</button>
+        <button id="btn-next" class="next">&gt;</button>
+<!--      </div>-->
+    </div>
+
+</div>
+<footer th:replace="~{user/fragments/footer :: footer}"></footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="/assets/js/user/articleUser.js"></script>
+
+</body>
+</html>

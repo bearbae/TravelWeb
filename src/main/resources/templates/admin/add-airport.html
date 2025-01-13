@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragments/head :: head"></head>
+<script src="/assets/js/addAirport.js"></script>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+  <header th:replace="admin/fragments/header :: header"></header>
+
+  <aside th:replace="admin/fragments/sidebar :: sidebar"></aside>
+
+  <div class="content-wrapper">
+    <section class="content-header">
+      <h1>
+        Quản lý sân bay
+      </h1>
+    </section>
+
+    <section class="content">
+
+      <div class="col-md-8">
+        <div class="box box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">Thêm mới sân bay</h3>
+          </div>
+          <form role="form" id="addAirport">
+            <div class="box-body">
+              <div class="form-group">
+                <label for="airport_name">Tên sân bay</label>
+                <input type="text" class="form-control" id="airport_name" name="name" required>
+              </div>
+            </div>
+            <div class="box-footer">
+              <button type="submit" class="btn btn-primary">Thêm</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer th:replace="admin/fragments/footer :: footer"></footer>
+
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+
+  var addAirport = document.getElementById("addAirport");
+
+  addAirport.addEventListener("submit", function (event) {
+    event.preventDefault();
+    const name = document.getElementById("airport_name").value;
+
+    // Tạo đối tượng airport với tên sân bay
+    const airport = { name: name };
+
+    console.log("Dữ liệu gửi đi:", JSON.stringify(airport));
+
+    fetch(`http://localhost:8080/api/admin/airport/add`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(airport)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Không có phản hồi!");
+        }
+        return response.text();
+    })
+    .then(data => {
+        if (data === "Thêm sân bay thành công!") {
+            alert(data);
+            window.location.href = "/admin/airport";
+        } else {
+            alert("Tên sân bay đã tồn tại! Hãy thử lại.");
+        }
+    })
+    .catch(error => {
+        console.error("Error: ", error);
+        alert("Lỗi. Hãy thử lại!");
+    });
+  });
+
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/images/logo_title.ico">
+    <title>Travel</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+          integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/grid.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/base.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/style.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/responsive.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/login.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/signup.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/ticket_flight.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+<!-- Header Fragment -->
+<head th:replace="~{user/fragments/header :: header}"></head>
+
+<main>
+    <div class="container">
+        <div class="ticket_flight_container">
+            <p class="tilte">Tìm kiếm vé máy bay</p>
+
+            <div class="flight-type">
+                <label>
+                    <input type="radio" name="flightType" value="oneway" checked onclick="toggleReturnDate()"> Một chiều
+                </label>
+
+                <label>
+                    <input type="radio" name="flightType" value="roundtrip" onclick="toggleReturnDate()"> Khứ hồi
+                </label>
+            </div>
+
+            <div class="flight-info-container">
+                <div class="flight-info">
+                    Điểm đi
+                    <input type="text" id="origin" placeholder="Vui lòng nhập điểm đi" onfocus="loadAirports('origin')">
+                    <div id="origin-dropdown" class="dropdown"></div>
+                </div>
+
+                <div class="flight-info">
+                    Điểm đến
+                    <input type="text" id="destination" placeholder="Vui lòng nhập điểm đến"
+                           onfocus="loadAirports('destination')">
+                    <div id="destination-dropdown" class="dropdown"></div>
+                </div>
+            </div>
+
+            <div class="flight-info-container">
+                <div class="flight-info">
+                    Ngày đi
+                    <input type="date" id="departureDate">
+                </div>
+                <div class="flight-info" id="returnDateDiv" style="display: none;">
+                    Ngày về
+                    <input type="date" id="returnDate">
+                </div>
+            </div>
+
+            <div class="flight-info-container">
+                <div class="flight-info button-search" style="justify-content: center;">
+                    <button onclick="searchFlights()">Tìm kiếm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div id="flight-results"></div>
+        <div class="pagination-controls d-flex justify-content-center align-items-center mt-3">
+            <button id="prevPage" class="btn btn-primary me-2" disabled>Trước</button>
+            <span id="pageInfo">Trang 1 / 1</span>
+            <button id="nextPage" class="btn btn-primary ms-2" disabled>Tiếp</button>
+        </div>
+    </div>
+
+</main>
+
+<footer th:replace="~{user/fragments/footer :: footer}"></footer>
+
+<script src="/assets/js/user/main.js" type="text/javascript"></script>
+
+<script>
+    function toggleReturnDate() {
+        const oneWayRadio = document.querySelector('input[value="oneway"]');
+        const returnDateDiv = document.getElementById('returnDateDiv');
+
+        if (oneWayRadio.checked) {
+            returnDateDiv.style.display = 'none';
+        } else {
+            returnDateDiv.style.display = 'block';
+        }
+    }
+</script>
+
+<script>
+    let flights = [];
+    let currentPage = 1;
+    const flightsPerPage = 3;
+
+    function displayFlights() {
+        const flightResults = document.getElementById("flight-results");
+        flightResults.innerHTML = ""; // Clear previous results
+
+        const start = (currentPage - 1) * flightsPerPage;
+        const end = start + flightsPerPage;
+        const currentFlights = flights.slice(start, end);
+
+        if (currentFlights.length === 0) {
+            flightResults.innerHTML = "<p>Không có chuyến bay nào được tìm thấy.</p>";
+            document.getElementById("pageInfo").innerText = `Trang 0 / 0`;
+            document.getElementById("prevPage").disabled = true;
+            document.getElementById("nextPage").disabled = true;
+            return;
+        }
+
+        currentFlights.forEach(flight => {
+            if (flight.isRoundTrip) {
+                // Hiển thị chuyến bay khứ hồi
+                const flightDiv = document.createElement("div");
+                flightDiv.classList.add("roundtrip-flight", "mb-3", "p-3", "border", "rounded");
+                flightDiv.innerHTML = `
+                        <div class="flight-container">
+                            <div class="box">
+                                <h4>Chiều đi</h4>
+                                <p><strong>Chuyến bay:</strong> ${flight.departureFlightNumber}</p>
+                                <p><strong>Từ:</strong> ${flight.departureCity}</p>
+                                <p><strong>Đến:</strong> ${flight.arrivalCity}</p>
+                                <p><strong>Ngày đi:</strong> ${flight.departureDate}</p>
+                                <p><strong>Giờ đi:</strong> ${flight.departureTime}</p>
+                            </div>
+                            <div class="box">
+                                <h4>Chiều về</h4>
+                                <p><strong>Chuyến bay:</strong> ${flight.returnFlightNumber}</p>
+                                <p><strong>Từ:</strong> ${flight.arrivalCity}</p>
+                                <p><strong>Đến:</strong> ${flight.departureCity}</p>
+                                <p><strong>Ngày về:</strong> ${flight.returnDate}</p>
+                                <p><strong>Giờ về:</strong> ${flight.returnTime}</p>
+                            </div>
+                            <div class="price-container box">
+                                <p><strong>Giá:</strong> ${Number(flight.price).toLocaleString()} VND</p>
+                                <p><strong>Số vé khả dụng:</strong> ${flight.availableSeats}</p>
+                                <button class="book-button" onclick="bookRoundtrip('${flight.departureFlightNumber}', '${flight.returnFlightNumber}', ${flight.price})">Đặt vé</button>
+                            </div>
+                        </div>
+                    `;
+                flightResults.appendChild(flightDiv);
+            } else {
+                // Hiển thị chuyến bay một chiều
+                const flightDiv = document.createElement("div");
+                flightDiv.classList.add("flight", "mb-3", "p-3", "border", "rounded");
+                flightDiv.innerHTML = `
+                        <div class="flight-container d-flex justify-content-between align-items-center">
+                            <div class="display-flight">
+                                <h4>Chuyến bay: ${flight.flightNumber}</h4>
+                                <p>${flight.departureCity} → ${flight.arrivalCity}</p>
+                                <p>Ngày đi: ${flight.departureDate} - Giờ đi: ${flight.departureTime}</p>
+                                <p>Số ghế còn lại: ${flight.availableSeats} - Giá vé: ${Number(flight.price).toLocaleString()} VND</p>
+                            </div>
+                            <button class="book-button" onclick="bookFlight('${flight.flightNumber}')">Đặt vé</button>
+                        </div>
+                    `;
+                flightResults.appendChild(flightDiv);
+            }
+        });
+
+        const totalPages = Math.ceil(flights.length / flightsPerPage);
+        document.getElementById("pageInfo").innerText = `Trang ${currentPage} / ${totalPages}`;
+        document.getElementById("prevPage").disabled = currentPage === 1;
+        document.getElementById("nextPage").disabled = currentPage === totalPages;
+    }
+
+    function prevPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            displayFlights();
+        }
+    }
+
+    function nextPage() {
+        if (currentPage < Math.ceil(flights.length / flightsPerPage)) {
+            currentPage++;
+            displayFlights();
+        }
+    }
+
+    async function fetchFlights() {
+        try {
+            const response = await fetch("http://localhost:8080/api/admin/flight/all");
+            if (!response.ok) {
+                throw new Error("Không thể lấy dữ liệu chuyến bay.");
+            }
+            const allFlights = await response.json();
+
+            flights = allFlights.map(flight => ({
+                ...flight,
+                isRoundTrip: false
+            }));
+
+            currentPage = 1; // Reset to first page
+            displayFlights();
+        } catch (error) {
+            console.error("Lỗi khi lấy danh sách chuyến bay:", error);
+            document.getElementById("flight-results").innerHTML = "<p>Có lỗi xảy ra khi tải dữ liệu chuyến bay.</p>";
+        }
+    }
+
+    async function searchRoundTripFlights() {
+        const origin = document.getElementById("origin").value.trim();
+        const destination = document.getElementById("destination").value.trim();
+        const departureDate = document.getElementById("departureDate").value.trim();
+        const returnDate = document.getElementById("returnDate").value.trim();
+
+        // Yêu cầu đầy đủ thông tin để tìm kiếm chuyến bay khứ hồi
+        if (!origin || !destination || !departureDate || !returnDate) {
+            alert("Vui lòng nhập đầy đủ thông tin để tìm kiếm chuyến bay khứ hồi.");
+            return;
+        }
+
+        try {
+            let url = `http://localhost:8080/api/admin/flight/search-roundtrip?`;
+
+            if (origin) {
+                url += `departureCity=${encodeURIComponent(origin)}&`;
+            }
+            if (destination) {
+                url += `arrivalCity=${encodeURIComponent(destination)}&`;
+            }
+            if (departureDate) {
+                url += `departureDate=${encodeURIComponent(departureDate)}&`;
+            }
+            if (returnDate) {
+                url += `returnDate=${encodeURIComponent(returnDate)}&`;
+            }
+
+            url = url.endsWith('&') ? url.slice(0, -1) : url;
+
+            const response = await fetch(url);
+
+            if (!response.ok) {
+                throw new Error("Không thể kết nối đến server. Vui lòng thử lại sau.");
+            }
+
+            const roundTripFlights = await response.json();
+
+            flights = roundTripFlights.map(rt => ({
+                isRoundTrip: true,
+                departureFlightNumber: rt.departureFlightNumber,
+                returnFlightNumber: rt.returnFlightNumber,
+                departureCity: rt.departureCity,
+                arrivalCity: rt.arrivalCity,
+                departureDate: rt.departureDate,
+                returnDate: rt.returnDate,
+                departureTime: rt.departureTime,
+                returnTime: rt.returnTime,
+                availableSeats: rt.remainingSeatsForDeparture,
+                price: rt.price
+            }));
+
+            currentPage = 1; // Reset to first page
+            displayFlights();
+
+            if (flights.length === 0) {
+                document.getElementById("flight-results").innerHTML = "<p>Không tìm thấy chuyến bay khứ hồi phù hợp.</p>";
+                document.getElementById("pageInfo").innerText = `Trang 0 / 0`;
+                document.getElementById("prevPage").disabled = true;
+                document.getElementById("nextPage").disabled = true;
+            }
+        } catch (error) {
+            console.error("Lỗi khi tìm kiếm chuyến bay khứ hồi:", error);
+            document.getElementById("flight-results").innerHTML = "<p>Có lỗi xảy ra khi tìm kiếm chuyến bay khứ hồi. Vui lòng thử lại sau.</p>";
+        }
+    }
+
+    async function searchOneWayFlights() {
+        const origin = document.getElementById("origin").value.trim();
+        const destination = document.getElementById("destination").value.trim();
+        const departureDate = document.getElementById("departureDate").value.trim();
+
+        try {
+            let url = `http://localhost:8080/api/admin/flight/search?`;
+
+            if (origin) {
+                url += `departureCity=${encodeURIComponent(origin)}&`;
+            }
+            if (destination) {
+                url += `arrivalCity=${encodeURIComponent(destination)}&`;
+            }
+            if (departureDate) {
+                url += `departureDate=${encodeURIComponent(departureDate)}&`;
+            }
+
+            url = url.endsWith('&') ? url.slice(0, -1) : url;
+
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error("Không thể kết nối đến server. Vui lòng thử lại sau.");
+            }
+            const searchResults = await response.json();
+
+            flights = searchResults.map(flight => ({
+                ...flight,
+                isRoundTrip: false
+            }));
+
+            currentPage = 1; // Reset to first page
+            displayFlights();
+
+            if (flights.length === 0) {
+                document.getElementById("flight-results").innerHTML = "<p>Không tìm thấy chuyến bay phù hợp.</p>";
+                document.getElementById("pageInfo").innerText = `Trang 0 / 0`;
+                document.getElementById("prevPage").disabled = true;
+                document.getElementById("nextPage").disabled = true;
+            }
+        } catch (error) {
+            console.error("Lỗi khi tìm kiếm chuyến bay:", error);
+            document.getElementById("flight-results").innerHTML = "<p>Có lỗi xảy ra khi tìm kiếm chuyến bay.</p>";
+        }
+    }
+
+    async function searchFlights() {
+        const flightType = document.querySelector('input[name="flightType"]:checked').value;
+
+        if (flightType === "roundtrip") {
+            await searchRoundTripFlights();
+        } else {
+            await searchOneWayFlights();
+        }
+    }
+
+    function bookFlight(flightId) {
+        window.location.href = `/user/book_ticket_flight?flightId=${flightId}`;
+    }
+
+    function bookRoundtrip(departureFlightId, returnFlightId, totalPrice) {
+        const roundtripData = {
+            departureFlightId,
+            returnFlightId,
+            totalPrice
+        };
+
+        sessionStorage.setItem("roundtripData", JSON.stringify(roundtripData));
+
+        const url = `/user/book_ticket_flight_return?departureFlightId=${departureFlightId}&returnFlightId=${returnFlightId}&totalPrice=${totalPrice}`;
+        window.location.href = url;
+    }
+
+    document.getElementById("prevPage").addEventListener("click", prevPage);
+    document.getElementById("nextPage").addEventListener("click", nextPage);
+
+    window.onload = fetchFlights;
+</script>
+
+<script>
+    async function loadAirports(type) {
+        const dropdown = document.getElementById(`${type}-dropdown`);
+        dropdown.style.display = "block";
+        dropdown.innerHTML = "<p>Đang tải...</p>";
+
+        try {
+            const response = await fetch('http://localhost:8080/api/admin/airport/all');
+            const airports = await response.json();
+            dropdown.innerHTML = "";
+
+            airports.forEach(airport => {
+                const item = document.createElement("div");
+                item.classList.add("dropdown-item");
+                item.textContent = airport.name;
+                item.onclick = () => selectAirport(type, airport.name);
+                dropdown.appendChild(item);
+            });
+        } catch (error) {
+            console.error("Lỗi khi tải danh sách sân bay:", error);
+            dropdown.innerHTML = "<p>Lỗi khi tải dữ liệu sân bay.</p>";
+        }
+    }
+
+    function selectAirport(type, name) {
+        document.getElementById(type).value = name;
+        document.getElementById(`${type}-dropdown`).style.display = "none";
+    }
+
+    window.addEventListener("click", function (e) {
+        const originDropdown = document.getElementById("origin-dropdown");
+        const destinationDropdown = document.getElementById("destination-dropdown");
+        if (!e.target.matches("#origin") && !e.target.closest("#origin-dropdown")) {
+            originDropdown.style.display = "none";
+        }
+        if (!e.target.matches("#destination") && !e.target.closest("#destination-dropdown")) {
+            destinationDropdown.style.display = "none";
+        }
+    });
+
+    async function searchAirports(type) {
+        const input = document.getElementById(type).value.toLowerCase();
+        const dropdown = document.getElementById(`${type}-dropdown`);
+        dropdown.style.display = "block";
+        dropdown.innerHTML = "<p>Đang tìm...</p>";
+
+        try {
+            const response = await fetch('http://localhost:8080/api/admin/airport/all');
+            const airports = await response.json();
+            dropdown.innerHTML = ""; // Clear loading text
+
+            const filteredAirports = airports.filter(airport =>
+                airport.name.toLowerCase().includes(input)
+            );
+
+            if (filteredAirports.length === 0) {
+                dropdown.innerHTML = "<p>Không tìm thấy sân bay phù hợp.</p>";
+            } else {
+                filteredAirports.forEach(airport => {
+                    const item = document.createElement("div");
+                    item.classList.add("dropdown-item");
+                    item.textContent = airport.name;
+                    item.onclick = () => {
+                        document.getElementById(type).value = airport.name;
+                        dropdown.style.display = "none";
+                    };
+                    dropdown.appendChild(item);
+                });
+            }
+        } catch (error) {
+            console.error("Lỗi khi tìm sân bay:", error);
+            dropdown.innerHTML = "<p>Có lỗi xảy ra khi tìm sân bay.</p>";
+        }
+    }
+
+    document.getElementById("origin").addEventListener("input", () => searchAirports("origin"));
+    document.getElementById("destination").addEventListener("input", () => searchAirports("destination"));
+</script>
+</body>
+
+</html>

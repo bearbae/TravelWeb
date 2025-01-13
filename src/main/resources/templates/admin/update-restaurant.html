@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www/thymeleaf.org">
+<head th:replace="admin/fragments/head :: head"></head>
+<script src="/assets/js/updateRestaurant.js"></script>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+    <header th:replace="admin/fragments/header :: header"></header>
+
+    <aside th:replace="admin/fragments/sidebar :: sidebar"></aside>
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                Quản lý thông tin nhà hàng
+            </h1>
+        </section>
+
+        <section class="content">
+
+            <div class="col-md-8">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Cập nhật thông tin nhà hàng</h3>
+                    </div>
+                    <form role="form" id="updateRestaurant">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="Name">Tên nhà hàng</label>
+                                <input type="text" class="form-control" id="Name" name="name" >
+                            </div>
+                            <div class="form-group">
+                                <label for="Location">Địa điểm</label>
+                                <input type="text" class="form-control" id="Location" name="location" >
+                            </div>
+                            <div class="form-group">
+                                <label for="Price">Giá(VNĐ)</label>
+                                <input type="text" class="form-control" id="Price" name="price"  >
+                            </div>
+                            <div class="form-group">
+                                <label for="AvailableTables">Bàn trống</label>
+                                <input type="text" class="form-control" id="AvailableTables" name="availableTables" >
+                            </div>
+                            <div class="form-group">
+                                <label for="imageRestaurant">Ảnh</label>
+                                <input type="file" class="form-control" id="imageRestaurant" name="imageRestaurant" accept="image/png, image/jpeg, image/jpg, image/gif" >
+                                <span id="currentImage"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Mô tả</label>
+                                <input type="text" class="form-control" id="description" name="description" required>
+                            </div>
+                        </div>
+                        <div id="message" class="" style="margin-left: 10px;"></div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary" >Cập nhật</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer th:replace="admin/fragments/footer :: footer"></footer>
+
+</div>
+<script>
+    document.getElementById('Price').addEventListener('input', function(e) {
+      let value = e.target.value;
+      value = value.replace(/[^0-9]/g, '');
+      let formattedValue = new Intl.NumberFormat('vi-VN').format(value);
+      e.target.value = formattedValue;
+    });
+    document.getElementById('updateRestaurant').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      let priceInput = document.getElementById('Price').value;
+
+      let priceWithoutDots = priceInput.replace(/\./g, '');
+
+      document.getElementById('Price').value = priceWithoutDots;
+
+    });
+</script>
+</body>
+</html>

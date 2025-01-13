@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="user/fragments/head :: head"></head>
+<link rel="stylesheet" th:href="@{/assets/css/userCSS/room.css}">
+<script src="/assets/js/user/roomUser.js"></script>
+<body>
+<head th:replace="~{user/fragments/header :: header}"></head>
+
+<div class="body_room">
+    <div id="inforRoom">
+    </div>
+    <h2 >Các loại phòng & giá</h2>
+    <div class="room-pricing-section">
+        <div class="room-list" id="roomData">
+        </div>
+        <div class="booking-summary">
+            <div>
+                <p>Tổng tiền</p>
+                <span>0 đ</span>
+            </div>
+            <button class="book-now">Đặt ngay</button>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div id="bookingModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2>Đặt khách sạn</h2>
+        <div id="roomToBill"></div>
+        <form class="booking-form">
+            <label>Ngày nhận phòng</label>
+            <input type="date" name="checkInDate">
+            <label>Họ và tên *</label>
+            <input type="text" placeholder="Nhập họ và tên" name="fullName" required>
+
+            <label>Số điện thoại *</label>
+            <input type="tel" placeholder="Nhập số điện thoại" name="phoneNumber" required>
+
+            <label>Địa chỉ email *</label>
+            <input type="email" placeholder="Nhập email" name="emailBooking" required>
+
+            <label>Yêu cầu của bạn</label>
+            <textarea placeholder="Nhập yêu cầu của bạn" name="specialRequest"></textarea>
+        </form>
+        <div class="booking-summary totalFormBooking">
+            <p>Tổng tiền</p>
+            <span class="total-price"></span>
+        </div>
+        <div class="action-buttons">
+            <button class="consultation-btn">Đăng ký tư vấn</button>
+            <button class="book-now-btn" id="ConfirmBookHotel">Xác nhận</button>
+        </div>
+    </div>
+</div>
+<!-- Modal success -->
+<div id="alertModal" class="modal_alert">
+    <div class="modal-content_alert">
+        <div class="success" id="success">
+            <h2>Đặt thành công!</h2>
+            <p>Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi.</p>
+        </div>
+        <div class="failure" id="fail">
+            <h2>Đặt thất bại</h2>
+            <p>Bạn chưa chọn phòng.</p>
+        </div>
+        <button class="close-btn_alert" id="closeModalBtn">Đóng</button>
+    </div>
+</div>
+
+<footer th:replace="~{user/fragments/footer :: footer}"></footer>
+<script>
+    document.querySelector('[name="checkInDate"]').value = new Date().toISOString().split('T')[0];
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

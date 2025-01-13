@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragments/head :: head"></head>
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+    <header th:replace="admin/fragments/header :: header"></header>
+    <aside th:replace="admin/fragments/sidebar :: sidebar"></aside>
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>Quản lý sân bay</h1>
+        </section>
+
+        <section class="content">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <a href="/admin/airport/add" class="btn btn-success">+Thêm mới sân bay</a>
+
+                        <div class="box-tools">
+                            <form id="form">
+                                <div class="input-group input-group-sm" style="width: 300px;">
+                                    <input type="text" name="airportName" class="form-control" placeholder="Tên sân bay">
+                                    <div class="input-group-btn">
+                                        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên sân bay</th>
+                                <th>Hành động</th>
+                            </tr>
+                            </thead>
+                            <tbody id="airportData">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer th:replace="admin/fragments/footer :: footer"></footer>
+</div>
+</body>
+</html>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    fetchAirports();  // Lấy danh sách sân bay khi trang được tải
+
+    // Xử lý tìm kiếm sân bay
+    const searchForm = document.getElementById("form");
+    searchForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const airportNameInput = document.querySelector("input[name='airportName']").value;
+        searchAirports(airportNameInput);
+    });
+});
+
+async function fetchAirports() {
+    try {
+        const response = await fetch(`http://localhost:8080/api/admin/airport/all`);
+        if (!response.ok) {
+            console.error("Không lấy được danh sách sân bay.");
+            return;
+        }
+        const airports = await response.json();
+        displayAirports(airports);
+    } catch (error) {
+        console.error("Lỗi khi lấy danh sách sân bay:", error);
+    }
+}
+
+async function searchAirports(name) {
+    try {
+        const response = await fetch(`http://localhost:8080/api/admin/airport/search?name=${encodeURIComponent(name)}`);
+        if (!response.ok) {
+            console.error("Không tìm thấy sân bay.");
+            return;
+        }
+        const airports = await response.json();
+        displayAirports(airports);
+    } catch (error) {
+        console.error("Lỗi khi tìm kiếm sân bay:", error);
+    }
+}
+
+function displayAirports(airports) {
+    const airportData = document.getElementById("airportData");
+    airportData.innerHTML = "";
+    airports.forEach(airport => {
+        let row = `
+            <tr>
+                <td>${airport.id}</td>
+                <td>${airport.name}</td>
+                <td>
+                    <button class="btn btn-success" onclick="editAirport(${airport.id})">Sửa</button>
+                    <button class="btn btn-danger" onclick="deleteAirport(${airport.id})">Xóa</button>
+                </td>
+            </tr>
+        `;
+        airportData.innerHTML += row;
+    });
+}
+
+function editAirport(airportId) {
+    fetch(`http://localhost:8080/api/admin/airport/${airportId}`)
+        .then(response => response.json())
+        .then(data => {
+            localStorage.setItem("airportData", JSON.stringify(data));
+            window.location.href = "/admin/airport/update";
+        })
+        .catch(error => console.error("Lỗi khi lấy thông tin sân bay:", error));
+}
+
+function deleteAirport(airportId) {
+    let confirmation = confirm("Bạn có chắc chắn muốn xóa sân bay này?");
+    if (confirmation) {
+        fetch(`http://localhost:8080/api/admin/airport/delete/${airportId}`, { method: 'DELETE' })
+            .then(response => {
+                if (!response.ok) {
+                    alert("Xóa sân bay thất bại.");
+                } else {
+                    window.location.reload(); // Tải lại trang
+                }
+            })
+            .catch(error => console.error("Lỗi khi xóa sân bay:", error));
+    }
+}
+
+
+</script>

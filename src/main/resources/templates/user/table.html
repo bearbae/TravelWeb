@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head >
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/images/logo_title.ico">
+    <title>Travel</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+          integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/grid.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/base.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/style.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/responsive.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/login.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/signup.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/table.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+<head th:replace="~{user/fragments/header :: header}"></head>
+    <main>
+        <div class="body_table">
+            <div id="inforTable">
+            </div>
+            <h2 style="color: #000;">Các loại bàn & giá</h2>
+            <div class="table-pricing-section">
+                <div class="table-list" id="tableData">
+                </div>
+                <div class="booking-summary" style="margin-left: 20px;">
+                    <div>
+                        <p>Tổng số tiền</p>
+                        <span>0 đ</span>
+                    </div>
+                    <button class="book-now">Đặt ngay</button>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div id="bookingModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <h2>Đặt bàn</h2>
+                <div id="tableToBill"></div>
+                <form class="booking-form">
+                    <label>Ngày nhận bàn</label>
+                    <input type="date" name="checkInDate">
+                    <label>Họ và tên *</label>
+                    <input type="text" placeholder="Nhập họ và tên" name="fullName" required>
+        
+                    <label>Số điện thoại *</label>
+                    <input type="tel" placeholder="Nhập số điện thoại" name="phoneNumber" required>
+        
+                    <label>Địa chỉ email *</label>
+                    <input type="email" placeholder="Nhập email" name="emailBooking" required>
+        
+                    <label>Yêu cầu của bạn</label>
+                    <textarea placeholder="Nhập yêu cầu của bạn" name="specialTable"></textarea>
+                </form>
+                <div class="booking-summary totalFormBooking">
+                    <p>Tổng tiền</p>
+                    <span class="total-price"></span>
+                </div>
+                <div class="action-buttons">
+                    <button class="consultation-btn">Đăng ký tư vấn</button>
+                    <button class="book-now-btn" id="ConfirmBook">Đặt ngay</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+<footer th:replace="~{user/fragments/footer :: footer}"></footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="/assets/js/user/tableUser.js"></script>
+</body>
+
+</html>

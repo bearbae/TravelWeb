@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head >
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="assets/images/logo_title.ico">
+    <title>Travel</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+          integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/grid.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/base.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/style.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/responsive.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/login.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/signup.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/userCSS/home.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<head th:replace="~{user/fragments/header :: header}"></head>
+<div class="container my-5 ">
+    <h2 class="section-title">Ưu đãi cho bạn</h2>
+    <div class="row banner">
+        <div class="col-md-4">
+            <img src="/assets/images/dulcih1.jpg" alt="Banner 1">
+        </div>
+        <div class="col-md-4">
+            <img src="/assets/images/dulich2.jpg" alt="Banner 2">
+        </div>
+        <div class="col-md-4">
+            <img src="/assets/images/dulich3.jpg" alt="Banner 3">
+        </div>
+    </div>
+
+    <h2 class="section-title">Vì sao bạn nên chọn BearTravel</h2>
+    <div class="row text-center">
+        <div class="col-md-3">
+            <div class="info-icon">🏞️</div>
+            <h5>Vô vàn lựa chọn</h5>
+            <p>Trải nghiệm đa dạng với giá ưu đãi.</p>
+        </div>
+        <div class="col-md-3">
+            <div class="info-icon">💰</div>
+            <h5>Chơi vui, giá tốt</h5>
+            <p>Trải nghiệm chất lượng với giá tốt.</p>
+        </div>
+        <div class="col-md-3">
+            <div class="info-icon">📅</div>
+            <h5>Dễ dàng và tiện lợi</h5>
+            <p>Đặt vé nhanh chóng, miến xếp hàng,
+                miễn phí hủy, tiện lợi cho bạn tha
+                hồ khám phá.
+            </p>
+        </div>
+        <div class="col-md-3">
+            <div class="info-icon">✅</div>
+            <h5>Đáng tin cậy</h5>
+            <p>Được hàng triệu khách hàng tin dùng.
+                Dịch vụ hỗ trợ tận tình, đồng hành
+                cũng bạn mọi lúc mọi nơi.
+            </p>
+        </div>
+    </div>
+
+    <div class="body-card">
+        <h2 class="section-title">Các hoạt động nổi bật</h2>
+        <div class="row" id="card-container">
+        </div>
+        <button id="btn-prev" class="carousel-btn btn-prev" disabled>&lt;</button>
+        <button id="btn-next" class="carousel-btn btn-next">&gt;</button>
+    </div>
+    <div class="text-center mt-3">
+        <button class="btn btn-outline-dark" id="viewAllTour">Xem tất cả</button>
+    </div>
+
+    <h2 class="section-title">Trải nghiệm cho mọi người</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card card-box ">
+                <div class="card-body_experience c1 text-white"
+                     style="background-image: url('/assets/images/sigapore.jpg'); height: 300px;">
+                    <h5>Chớp Gáp Deal - Thái</h5>
+                    <p>Khám phá tour Thái Lan</p>
+                    <button href="#" class="explore">Khám phá</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-box">
+                <div class="card-body_experience c2 text-white"
+                     style="background-image: url('/assets/images/chauau.jpg');">
+                    <h5>Càng Mua Càng Hời</h5>
+                    <p>Ưu đãi hấp dẫn</p>
+                    <button href="#" class="explore">Khám phá</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card card-box">
+                <div class="card-body_experience c3 text-white"
+                     style="background-image: url('/assets/images/anhhoian.jpg');">
+                    <h5>Trải nghiệm những tour hấp dẫn</h5>
+                    <p>Tour cao cấp</p>
+                    <button href="#" class="explore">Khám phá</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="body_destination">
+        <h2 class="section-title">Bạn muốn đi đâu chơi?</h2>
+        <div class="destination-container " id="dataDestination">
+        </div>
+        <button id="btn-prev2" class="carousel-btn btn-prev" disabled>&lt;</button>
+        <button id="btn-next2" class="carousel-btn btn-next">&gt;</button>
+    </div>
+<!--    <div class="text-center mt-3">-->
+<!--        <button class="btn btn-outline-dark">Xem tất cả</button>-->
+<!--    </div>-->
+</div>
+<footer th:replace="~{user/fragments/footer :: footer}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/js/user/tourUser.js"></script>
+
+</body>
+</html>
